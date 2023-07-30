@@ -14,6 +14,7 @@ import Error404 from "./components/Error404";
 import QuestionGeneratorDisplay from "./components/ProblemGenerator/QuestionGeneratorDisplay";
 
 function App() {
+  console.log("its app");
   return (
     <div className="App">
       <Header />
