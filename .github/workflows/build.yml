@@ -44,3 +44,8 @@ jobs:
         with:
           name: built-files
           path: build/
+          
+      - name: Move build files to repos build folder
+        run: |
+          mv built-files/ build/
+        working-directory: ${{ github.workspace }}
