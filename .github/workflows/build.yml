@@ -38,7 +38,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: built-files
-          path: build
           
   deploy:
     needs: build
@@ -49,4 +48,8 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: built-files
-          path: build
+          
+      - name: Move build files to repos build folder
+        run: |
+          mv built-files/* build/
+        working-directory: ${{ github.workspace }}
