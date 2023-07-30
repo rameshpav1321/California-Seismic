@@ -28,9 +28,6 @@ jobs:
       - name: Build files
         run: CI='' npm run build
         
-      - name: Create build directory
-        run: mkdir build
-
       - name: Move build files to build directory
         run: mv dist/* build/
 
