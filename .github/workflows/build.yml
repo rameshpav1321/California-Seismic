@@ -28,14 +28,11 @@ jobs:
       - name: Build files
         run: CI='' npm run build
         
-      - name: Move build files to build directory
-        run: mv dist/* build/
-
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
         with:
           name: built-files
-          path: build
+          path: build/
           
   deploy:
     needs: build
@@ -46,4 +43,4 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: built-files
-          path: build
+          path: build/
