@@ -15,7 +15,7 @@ const Question = ({ category, totalQuestions, answeredCorrect }) => {
 
   const handleSubmit = () => {
     setShowSolution(true);
-    totalQuestions((prev) => prev + 1);
+    // totalQuestions((prev) => prev + 1);
     if (question.answer === chosen) {
       answeredCorrect((prev) => prev + 1);
       colorRef.current.classList.remove("bg-gray-400");
@@ -70,6 +70,7 @@ const Question = ({ category, totalQuestions, answeredCorrect }) => {
           onClick={() => {
             setShowSolution(false);
             setChosen(null);
+            totalQuestions((prev) => prev + 1);
             setQuestion(generatorLogic(category));
           }}
         >
