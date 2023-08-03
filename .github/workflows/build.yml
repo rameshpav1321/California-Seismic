@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'auto build')
     runs-on: ubuntu-latest
 
     steps:
@@ -28,24 +28,44 @@ jobs:
       - name: Build files
         run: CI='' npm run build
         
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: built-files
-          path: build/
-          
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
+      # - name: Upload build artifact
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: built-files
+      #     path: build/
 
-    steps:
-      - name: Download build artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: built-files
-          path: build/
-          
-      - name: Move build files to repos build folder
+      - name: Push build files to master
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: |
-          mv build/* build/
-        working-directory: ${{ github.workspace }}
+          git config user.name "rameshpav1321"
+          git config user.email "rameshpavan.p@outlook.com"
+          # git checkout main
+          echo "$GITHUB_REF"
+          git add .
+          git commit -m "Add new build files"
+          git push origin master
+      # - name: Create pull request to merge new build files
+      #   uses: peter-evans/create-pull-request@v5
+      #   with:
+      #     branch: new build files
+      #     title: Update master with build files
+      #     commit-message: Add build files to master branch
+      #     labels: auto merge
+      #     delete-branch: true
+          
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Download build artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: built-files
+  #         path: build/
+          
+  #     - name: Move build files to repos build folder
+  #       run: |
+  #         mv build/* build/
+  #       working-directory: ${{ github.workspace }}
