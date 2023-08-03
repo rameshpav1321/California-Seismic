@@ -41,7 +41,7 @@ jobs:
           git config user.name "rameshpav1321"
           git config user.email "rameshpavan.p@outlook.com"
           # git checkout main
-          echo "$GITHUB_REF"
+          echo "heloo  $GITHUB_REF"
           git add .
           git commit -m "Add new build files"
           git push origin master
